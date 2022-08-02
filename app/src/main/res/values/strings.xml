@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Particle Connect</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connected">Connected</string>
+    <string name="signAndSendTransaction">signAndSendTransaction</string>
+    <string name="signTransaction">signTransaction</string>
+    <string name="signAllTransactions">signAllTransactions</string>
+    <string name="signMessage">signMessage</string>
+    <string name="signTypedData">signTypedData</string>
+</resources>
