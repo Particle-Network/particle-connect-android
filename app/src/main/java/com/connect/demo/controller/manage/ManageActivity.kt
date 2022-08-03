@@ -17,6 +17,7 @@ import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.connect.ParticleConnect
 import com.solana.adapter.SolanaConnectAdapter
+import com.wallet.connect.adapter.WalletConnectAdapter
 
 class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_manage) {
 
@@ -52,6 +53,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
         adapter.setList(ParticleConnect.getAdapters())
     }
 
+    private var qrDialog: WalletConnectFragment? = null
     private fun connectWallet(connectAdapter: IConnectAdapter) {
         when (connectAdapter) {
             is SolanaConnectAdapter -> {
@@ -60,6 +62,22 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
             }
             is EVMConnectAdapter -> {
                 showImportMenu(connectAdapter, "evm")
+            }
+            is WalletConnectAdapter -> {
+                connectAdapter.connect(object : ConnectCallback {
+                    override fun onConnected(account: Account) {
+                        toast("connect success")
+                        qrDialog?.dismissAllowingStateLoss()
+                    }
+
+                    override fun onError(error: ConnectError) {
+                        toast(error.message)
+                        qrDialog?.dismissAllowingStateLoss()
+                    }
+                })
+                connectAdapter.qrCodeUri()?.let {
+                    qrDialog = WalletConnectFragment.show(supportFragmentManager, it)
+                }
             }
             else -> {
                 connectAdapter.connect(object : ConnectCallback {

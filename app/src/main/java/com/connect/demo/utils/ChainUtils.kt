@@ -2,6 +2,9 @@ package com.connect.demo.utils
 
 import com.particle.base.*
 
+/**
+ * Created by chaichuanfa on 2022/7/25
+ */
 object ChainUtils {
     private val chainInfos = mutableListOf<ChainInfo>()
 

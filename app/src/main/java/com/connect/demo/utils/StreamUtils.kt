@@ -4,7 +4,9 @@ import android.content.res.Resources
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-
+/**
+ * Created by chaichuanfa on 2022/7/26
+ */
 object StreamUtils {
 
     fun getRawString(resource: Resources, rawId: Int): String {

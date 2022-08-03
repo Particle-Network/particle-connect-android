@@ -8,7 +8,9 @@ import org.p2p.solanaj.programs.SystemProgram
 import org.p2p.solanaj.programs.TokenProgram
 import java.math.BigInteger
 
-
+/**
+ * Created by chaichuanfa on 2022/7/29
+ */
 object SolanaTransactionManager {
 
     suspend fun transferNativeToken(

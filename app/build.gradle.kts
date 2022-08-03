@@ -73,7 +73,9 @@ fun getSignProperties(): Properties {
 
 dependencies {
     //required dependencies
+    implementation("network.particle:auth-service:0.5.8")
     implementation(libs.particle.auth)
+
     implementation(libs.connect)
     //optional dependencies
     implementation(libs.connect.evm.adapter)
@@ -90,10 +92,10 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.okhttp3)
     implementation(libs.recyclerview.adapter)
-    implementation(libs.glide.core) {
-        exclude(group="com.squareup.okhttp3", module = "okhttp")
-    }
-    annotationProcessor(libs.glide.compiler)
+    implementation(libs.coil)
+    implementation(libs.coil.svg)
+    implementation(libs.coil.gif)
+    implementation(libs.zxing.barcodescanner)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)

@@ -16,7 +16,9 @@ import org.p2p.solanaj.core.Transaction
 import java.math.BigInteger
 import java.util.*
 
-
+/**
+ * Created by chaichuanfa on 2022/7/26
+ */
 object MockManger {
 
     private val solanaRpcApi: SolanaRpcApi =
@@ -44,8 +46,8 @@ object MockManger {
             return EIP1559TransactionData(
                 "0x${ParticleConnect.chainId.toString(16)}",
                 from,
-                "0xAC6d81182998EA5c196a4424EA6AB250C7eb175b",
-                "0x38d7ea4c68000",
+                "0x504F83D65029fB607fcAa43ebD0b7022ab161B0C",
+                "0x9184e72a000",
                 gasLimit = "0x${Integer.toHexString(25000)}",
                 maxFeePerGas = "0x9502f90e",
                 maxPriorityFeePerGas = "0x9502F900",
