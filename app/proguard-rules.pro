@@ -19,9 +19,31 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep public class * extends com.chad.library.adapter.base.viewholder.BaseViewHolder{
- <init>(...);
+-keepclassmembers enum com.connect.demo.** { *; }
+-keep class com.connect.demo.** { *; }
+-dontwarn com.connect.demo.**
+-repackageclasses com.connect.demo
+
+-keep class androidx.databinding.DataBindingComponent {*;}
+-keepclassmembers class **.R$* {
+      public static <fields>;
+  }
+
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+
+-keep class com.chad.library.adapter.** {
+*;
 }
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.viewholder.BaseViewHolder
 -keepclassmembers  class **$** extends com.chad.library.adapter.base.viewholder.BaseViewHolder {
      <init>(...);
 }
+-keepattributes InnerClasses
+
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn androidx.**
