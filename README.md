@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/network.particle/auth-service/badge.svg?style=flat)](https://search.maven.org/artifact/network.particle/connect)
+
 # Particle Connect Android
 The best way to connect a wallet. Support multi chains and multi wallet. Learn more visit [Particle Network](https://docs.particle.network/).
 
