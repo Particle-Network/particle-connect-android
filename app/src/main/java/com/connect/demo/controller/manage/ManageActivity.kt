@@ -2,6 +2,7 @@ package com.connect.demo.controller.manage
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.Keep
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,16 +10,21 @@ import com.connect.common.ConnectCallback
 import com.connect.common.IConnectAdapter
 import com.connect.common.model.Account
 import com.connect.common.model.ConnectError
+import com.connect.common.utils.PrefUtils
 import com.connect.demo.R
 import com.connect.demo.base.BaseActivity
 import com.connect.demo.controller.secret.ImportWalletActivity
 import com.connect.demo.databinding.ActivityManageBinding
+import com.connect.demo.utils.ChainUtils
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
+import com.particle.base.ChainInfo
+import com.particle.base.EvmChain
 import com.particle.connect.ParticleConnect
+import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
+import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
-
 class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_manage) {
 
     private val adapter = ConnectAdapter()
@@ -33,6 +39,16 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+        setSubTitle()
+    }
+
+    lateinit var chainInfo: ChainInfo
+    private fun setSubTitle() {
+        val selectChain = PrefUtils.getSettingInt("current_selected_chain", 1)
+        chainInfo = ChainUtils.getAllChains()[selectChain]
+        val name = chainInfo.chainName.toString()
+        binding.toolbar.subtitle =
+            "Current Chain: " + name + "(" + chainInfo.chainId.toString() + ")"
     }
 
     private fun setupRv() {
@@ -68,6 +84,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                     override fun onConnected(account: Account) {
                         toast("connect success")
                         qrDialog?.dismissAllowingStateLoss()
+                        finish()
                     }
 
                     override fun onError(error: ConnectError) {
@@ -80,9 +97,13 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                 }
             }
             else -> {
+                if(connectCheck(connectAdapter)){
+                    return
+                }
                 connectAdapter.connect(object : ConnectCallback {
                     override fun onConnected(account: Account) {
                         toast("connect success")
+                        finish()
                     }
 
                     override fun onError(error: ConnectError) {
@@ -91,6 +112,30 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                 })
             }
         }
+    }
+
+    private fun connectCheck(connectAdapter: IConnectAdapter):Boolean {
+
+        if(connectAdapter is PhantomConnectAdapter){
+            if(chainInfo is EvmChain){
+                toast("Phantom only support Solana Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+                return true
+            }
+        }
+        if(connectAdapter is TrustConnectAdapter){
+            return if(chainInfo is EvmChain){
+                if(chainInfo.isMainnet()){
+                    false
+                }else{
+                    toast("Trust only support EVM Mainnet Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+                    true
+                }
+            }else{
+                toast("Trust only support EVM Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+                true
+            }
+        }
+        return false
     }
 
     private fun showImportMenu(connectAdapter: IConnectAdapter, chainType: String) {
@@ -121,6 +166,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
         connectAdapter.connect(object : ConnectCallback {
             override fun onConnected(account: Account) {
                 toast("Create wallet success")
+                finish()
             }
 
             override fun onError(error: ConnectError) {

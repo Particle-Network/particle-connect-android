@@ -4,7 +4,7 @@ targetSdk = "31"
 minSdk = "23"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-connect = "0.2.3"
+connect = "0.3.0"
 
 [libraries]
 #official

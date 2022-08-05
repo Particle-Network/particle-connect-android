@@ -41,9 +41,9 @@ object MockManger {
 
     suspend fun mockCreateTransaction(from: String): ITransactionData {
         return if (ParticleConnect.chainType == ChainType.Solana) {
-            mockCreateSendSplTokenTransaction(from)
+            mockSendSolanaTransaction(from)
         } else {
-            return EIP1559TransactionData(
+            EIP1559TransactionData(
                 "0x${ParticleConnect.chainId.toString(16)}",
                 from,
                 "0x504F83D65029fB607fcAa43ebD0b7022ab161B0C",

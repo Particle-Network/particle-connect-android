@@ -23,6 +23,11 @@ android {
         manifestPlaceholders["PN_PROJECT_ID"] = "34c6b829-5b89-44e8-90a9-6d982787b9c9"
         manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = "c6Z44Ml4TQeNhctvwYgdSv6DBzfjf6t6CB0JDscR"
         manifestPlaceholders["PN_APP_ID"] = "e35f880b-5d71-425f-97aa-5f26de7bc4d7"
+        buildConfigField(
+            "String",
+            "PN_API_BASE_URL",
+            "\"https://api.particle.network\""
+        )
     }
 
     signingConfigs {

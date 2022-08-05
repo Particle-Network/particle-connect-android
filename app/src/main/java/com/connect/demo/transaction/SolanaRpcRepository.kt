@@ -1,6 +1,7 @@
 package com.connect.demo.transaction
 
 import com.connect.common.provider.NetworkProvider
+import com.connect.demo.BuildConfig
 import com.connect.demo.model.RpcRequest
 import com.connect.demo.model.TransactionAddressData
 import com.connect.demo.utils.SolanaRpcApi
@@ -17,7 +18,7 @@ import java.util.*
 object SolanaRpcRepository {
 
     private val solanaRpcApi: SolanaRpcApi =
-        NetworkProvider.createRetrofit("https://api.particle.network/solana/rpc/")
+        NetworkProvider.createRetrofit("${BuildConfig.PN_API_BASE_URL}/solana/rpc/")
             .create(SolanaRpcApi::class.java)
 
     suspend fun getRecentBlockhash(commitment: String = "finalized"): String {

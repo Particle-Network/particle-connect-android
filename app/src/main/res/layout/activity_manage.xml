@@ -15,7 +15,9 @@
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_left"
             app:title="Connect to Wallet"
-            app:titleTextColor="@color/white" />
+            app:subtitleTextColor="#ff0000"
+            app:titleTextColor="@color/white"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/adapterRv"

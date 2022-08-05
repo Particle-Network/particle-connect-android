@@ -35,8 +35,9 @@ class ImportWalletActivity :
     }
 
     private fun importWallet(secret: String) {
-        try {
-            lifecycleScope.launch {
+
+        lifecycleScope.launch {
+            try {
                 val account = if (secret.contains(" ")) {
                     // import mnemonic
                     getAdapter().importWalletFromMnemonic(secret)
@@ -50,11 +51,12 @@ class ImportWalletActivity :
                     toast("import wallet fail")
                 }
                 finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                toast("import wallet fail")
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            toast(e.message ?: e.toString())
         }
+
     }
 
     private fun getAdapter(): ILocalAdapter {
