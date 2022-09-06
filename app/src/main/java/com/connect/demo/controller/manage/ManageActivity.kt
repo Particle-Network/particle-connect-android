@@ -107,7 +107,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                 var config: ParticleConnectConfig? = null
                 if (connectAdapter is ParticleConnectAdapter) {
                     val supportAuthType =  SupportAuthType.ALL.value
-                    //add custom  use:
+                    //you can add custom use:
 //                    val supportAuthType =
 //                        SupportAuthType.APPLE.value or SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value or SupportAuthType.GITHUB.value or SupportAuthType.LINKEDIN.value
                     config = ParticleConnectConfig(LoginType.EMAIL, supportAuthType, false, "")
