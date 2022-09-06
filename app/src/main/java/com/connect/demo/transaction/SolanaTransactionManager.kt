@@ -1,7 +1,7 @@
 package com.connect.demo.transaction
 
-import org.p2p.solanaj.core.PublicKey
 import org.p2p.solanaj.core.Transaction
+import org.p2p.solanaj.core.PublicKey
 import org.p2p.solanaj.core.TransactionInstruction
 import org.p2p.solanaj.kits.TokenTransaction
 import org.p2p.solanaj.programs.SystemProgram
@@ -33,7 +33,7 @@ object SolanaTransactionManager {
             )
         )
         transaction.feePayer = PublicKey(feePayerPublicKey ?: fromAddress)
-        transaction.recentBlockHash = recentBlockhash ?: SolanaRpcRepository.getRecentBlockhash()
+        transaction.recentBlockhash = recentBlockhash ?: SolanaRpcRepository.getRecentBlockhash()
         return transaction
     }
 
@@ -85,8 +85,8 @@ object SolanaTransactionManager {
             lamports
         )
 
-        transaction.addInstructions(instructions)
-        transaction.recentBlockHash = recentBlockhash ?: SolanaRpcRepository.getRecentBlockhash()
+        transaction.addInstruction(*instructions.toTypedArray())
+        transaction.recentBlockhash = recentBlockhash ?: SolanaRpcRepository.getRecentBlockhash()
         transaction.feePayer = feePayer
 
         return transaction

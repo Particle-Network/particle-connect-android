@@ -22,12 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:ellipsize="middle"
             android:maxLines="1"
             android:textColor="@color/teal_200"
             android:textSize="16sp"
-            tools:text="Address: 0xdsffsa...15dcr" />
+            tools:text="Address: 0xdsffsa...15dcr"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,6 +138,18 @@
                 android:backgroundTint="@color/purple_500"
                 android:gravity="center"
                 android:text="signTypedData"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            <Button
+                android:id="@+id/signMessageVerify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:backgroundTint="@color/purple_500"
+                android:gravity="center"
+                android:text="signMessageVerify"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
