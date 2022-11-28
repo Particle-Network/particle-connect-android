@@ -13,7 +13,7 @@ object ChainUtils {
 
         chainInfos.apply {
             add(EthereumChain(EthereumChainId.Mainnet))
-            add(EthereumChain(EthereumChainId.Kovan))
+            add(EthereumChain(EthereumChainId.Goerli))
 
             add(BscChain(BscChainId.Mainnet))
             add(BscChain(BscChainId.Testnet))
@@ -37,7 +37,7 @@ object ChainUtils {
             add(FantomChain(FantomChainId.Testnet))
 
             add(ArbitrumChain(ArbitrumChainId.Mainnet))
-            add(ArbitrumChain(ArbitrumChainId.Testnet))
+            add(ArbitrumChain(ArbitrumChainId.Goerli))
 
             add(HarmonyChain(HarmonyChainId.Mainnet))
             add(HarmonyChain(HarmonyChainId.Testnet))

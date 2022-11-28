@@ -78,9 +78,8 @@ fun getSignProperties(): Properties {
 
 dependencies {
     //required dependencies
-    implementation("network.particle:auth-service:0.5.8")
     implementation(libs.particle.auth)
-
+    implementation(libs.connect.common)
     implementation(libs.connect)
     //optional dependencies
     implementation(libs.connect.evm.adapter)
@@ -105,4 +104,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)
+
 }

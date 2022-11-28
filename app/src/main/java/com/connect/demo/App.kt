@@ -27,7 +27,7 @@ class App : Application() {
         ParticleConnect.init(
             this,
             Env.DEV,
-            EthereumChain(EthereumChainId.Kovan),
+            EthereumChain(EthereumChainId.Goerli),
             DAppMetadata(
                 "Particle Connect",
                 "https://static.particle.network/wallet-icons/Particle.png",
