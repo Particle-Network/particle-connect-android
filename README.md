@@ -18,6 +18,7 @@ Modular Kotlin wallet adapters and components for EVM & Solana chains. Manage wa
 dependencies {
      //required dependencies
     implementation("network.particle:auth-service:{latest-version}")
+    implementation("network.particle:connect-common:${latest-version}")
     implementation 'network.particle:connect:{latest-version}'
     
     //Optional: support evm chain Generate & Import wallet
