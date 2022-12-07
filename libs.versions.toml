@@ -4,9 +4,18 @@ targetSdk = "31"
 minSdk = "23"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-connect = "0.9.35"
+connect = "0.9.40"
+auth = "0.9.1"
 
 [libraries]
+#particle sdk
+particle-auth =  { module = "network.particle:auth-service", version.ref = "auth" }
+connect-common = { module = "network.particle:connect-common", version.ref = "connect" }
+connect = { module = "network.particle:connect", version.ref = "connect" }
+connect-evm-adapter = { module = "network.particle:connect-evm-adapter", version.ref = "connect" }
+connect-sol-adapter = { module = "network.particle:connect-solana-adapter", version.ref = "connect" }
+connect-phantom-adapter = { module = "network.particle:connect-phantom-adapter", version.ref = "connect" }
+connect-wallet-connect-adapter = { module = "network.particle:connect-wallet-connect-adapter", version.ref = "connect" }
 #official
 core-ktx = "androidx.core:core-ktx:1.7.0"
 appcompat = "androidx.appcompat:appcompat:1.4.1"
@@ -26,14 +35,7 @@ coil-svg = "io.coil-kt:coil-svg:2.0.0-rc03"
 coil-gif = "io.coil-kt:coil-gif:2.0.0-rc03"
 zxing-barcodescanner = "com.github.bingoogolapple.BGAQRCode-Android:zxing:1.3.8"
 
-#libs
-particle-auth = "network.particle:auth-service:0.8.13"
-connect-common = { module = "network.particle:connect-common", version.ref = "connect" }
-connect = { module = "network.particle:connect", version.ref = "connect" }
-connect-evm-adapter = { module = "network.particle:connect-evm-adapter", version.ref = "connect" }
-connect-sol-adapter = { module = "network.particle:connect-solana-adapter", version.ref = "connect" }
-connect-phantom-adapter = { module = "network.particle:connect-phantom-adapter", version.ref = "connect" }
-connect-wallet-connect-adapter = { module = "network.particle:connect-wallet-connect-adapter", version.ref = "connect" }
+
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
