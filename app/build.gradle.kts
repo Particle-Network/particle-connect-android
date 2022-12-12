@@ -79,6 +79,7 @@ fun getSignProperties(): Properties {
 dependencies {
     //required dependencies
     implementation(libs.particle.auth)
+    implementation(libs.particle.api)
     implementation(libs.connect.common)
     implementation(libs.connect)
     //optional dependencies

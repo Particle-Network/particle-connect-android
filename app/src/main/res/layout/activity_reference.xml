@@ -30,8 +30,7 @@
             android:maxLines="1"
             android:textColor="@color/teal_200"
             android:textSize="16sp"
-            tools:text="Address: 0xdsffsa...15dcr"
-            />
+            tools:text="Address: 0xdsffsa...15dcr" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,94 +66,111 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:id="@+id/menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/signAndSendTransaction"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signAndSendTransaction"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/signTransaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signTransaction"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/signAndSendTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signAndSendTransaction"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/signAllTransactions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signAllTransactions"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/signTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signTransaction"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/signMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signMessage"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/signAllTransactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signAllTransactions"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/signTypedData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signTypedData"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-            <Button
-                android:id="@+id/signMessageVerify"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:text="signMessageVerify"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/signMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signMessage"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/signTypedData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signTypedData"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/signMessageVerify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="signMessageVerify"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+                <Button
+                    android:id="@+id/writeContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:gravity="center"
+                    android:text="Write Contract"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
 
     </RelativeLayout>
 

@@ -21,7 +21,10 @@ import com.connect.demo.model.WalletAccount
 import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.StreamUtils
 import com.connect.demo.utils.toast
-import com.evm.adapter.EthersUtils
+import com.particle.api.evm
+import com.particle.api.service.data.ContractParams
+import com.particle.base.ParticleNetwork
+import com.particle.base.model.ITxData
 import com.particle.connect.ParticleConnect
 import kotlinx.coroutines.launch
 
@@ -129,6 +132,34 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
                 connectWallet()
             }
 
+        }
+        binding.writeContract.setOnClickListener {
+            lifecycleScope.launch {
+                val params = ContractParams.customAbiEncodeFunctionCall(
+                    contractAddress = "0xd000f000aa1f8accbd5815056ea32a54777b2fc4",
+                    methodName = "mint",
+                    params = listOf("1")
+                )
+                val txData: ITxData? = ParticleNetwork.evm.writeContract(
+                    walletAccount.account.publicAddress,
+                    params
+                )
+                walletAccount.connectAdapter.signAndSendTransaction(
+                    walletAccount.account.publicAddress,
+                    txData!!.serialize(),
+                    object : TransactionCallback {
+                        override fun onTransaction(transactionId: String?) {
+                            binding.result.text = transactionId ?: ""
+                            toast("signAndSendTransaction success")
+                        }
+
+                        override fun onError(error: ConnectError) {
+
+                            Log.e("signAndSendTransaction", error.message)
+                            toast(error.message)
+                        }
+                    })
+            }
         }
     }
 
