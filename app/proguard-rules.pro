@@ -47,3 +47,4 @@
 -keep public class * extends androidx.**
 -keep interface androidx.** {*;}
 -dontwarn androidx.**
+-keep class org.web3j.** { *; }
