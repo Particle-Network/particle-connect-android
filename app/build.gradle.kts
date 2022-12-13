@@ -28,25 +28,23 @@ android {
             "PN_API_BASE_URL",
             "\"https://api.particle.network\""
         )
+        proguardFiles(
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
+        )
     }
 
-    signingConfigs {
-        register("release") {
-            val props = getSignProperties()
-            storePassword = props["blockescape.storePassword"].toString()
-            keyAlias = props["blockescape.keyAlias"].toString()
-            keyPassword = props["blockescape.keyPassword"].toString()
-            storeFile = file(System.getenv("HOME") + "/.ssh/golden_block_escape.keystore")
-        }
-    }
+
 
     buildTypes {
         debug {
-            signingConfig = signingConfigs["release"]
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         release {
-            signingConfig = signingConfigs["release"]
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -67,14 +65,6 @@ android {
     }
 }
 
-fun getSignProperties(): Properties {
-    val keyConfigPath = System.getenv("HOME") + "/.ssh/minijoy.properties"
-    val props = Properties()
-    if (File(keyConfigPath).exists()) {
-        props.load(FileInputStream(file(keyConfigPath)))
-    }
-    return props
-}
 
 dependencies {
     //required dependencies
