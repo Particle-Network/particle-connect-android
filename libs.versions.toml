@@ -5,8 +5,8 @@ targetSdk = "31"
 minSdk = "23"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-connect = "0.9.50"
-auth = "0.9.1"
+connect = "0.9.70"
+auth = "0.9.18"
 
 [libraries]
 #particle sdk
