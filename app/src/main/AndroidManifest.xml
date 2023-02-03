@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.connect.demo">
 
+    <queries>
+        ...
+        <package android:name="coin98.crypto.finance.media" />
+    </queries>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,21 +17,21 @@
         android:theme="@style/ParticleConnect">
         <activity
             android:name=".controller.secret.ImportWalletActivity"
+            android:exported="false"
             android:theme="@style/ParticleConnect"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".controller.reference.ReferenceActivity"
-            android:theme="@style/ParticleConnect"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/ParticleConnect" />
         <activity
             android:name=".controller.manage.ManageActivity"
-            android:theme="@style/ParticleConnect"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/ParticleConnect" />
         <activity
             android:name=".controller.main.MainActivity"
-            android:theme="@style/ParticleConnect"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/ParticleConnect">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

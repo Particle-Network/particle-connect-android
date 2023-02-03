@@ -2,6 +2,7 @@ package com.connect.demo
 
 import android.app.Application
 import com.connect.common.model.DAppMetadata
+import com.connect.demo.custom_connectadapter.Coin98ConnectAdapter
 import com.connect.demo.utils.CoilLoader
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.Env
@@ -45,6 +46,7 @@ class App : Application() {
                 PhantomConnectAdapter(),
                 EVMConnectAdapter(),
                 SolanaConnectAdapter(),
+                Coin98ConnectAdapter(),
             )
         }
     }
