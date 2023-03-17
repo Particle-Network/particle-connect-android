@@ -36,7 +36,8 @@ object ChainUtils {
             add(FantomChain(FantomChainId.Mainnet))
             add(FantomChain(FantomChainId.Testnet))
 
-            add(ArbitrumChain(ArbitrumChainId.Mainnet))
+            add(ArbitrumChain(ArbitrumChainId.One))
+            add(ArbitrumChain(ArbitrumChainId.Nova))
             add(ArbitrumChain(ArbitrumChainId.Goerli))
 
             add(HarmonyChain(HarmonyChainId.Mainnet))
