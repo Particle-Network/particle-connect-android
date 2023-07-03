@@ -30,9 +30,10 @@ class App : Application() {
             Env.DEV,
             EthereumChain(EthereumChainId.Goerli),
             DAppMetadata(
-                "Particle Connect",
-                "https://static.particle.network/wallet-icons/Particle.png",
-                "https://particle.network"
+                "f431aaea6e4dea6a669c0496f9c009c1",
+                "Particle Connect", "https://connect.particle.network/icons/512.png", "https://particle.network",
+                description = "Particle Connect is a decentralized wallet connection solution that allows users to connect to DApps with their wallets.",
+                redirect = "particlewc://"
             )
         ) {
             listOf(

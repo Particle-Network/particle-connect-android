@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.connect.common.*
 import com.connect.common.eip4361.Eip4361Message
 import com.connect.common.eip4361.Web3jSignatureVerifier
 import com.connect.common.model.Account
-import com.connect.common.model.ChainType
 import com.connect.common.model.ConnectError
-import com.connect.common.utils.GsonUtils
-import com.connect.common.utils.HexUtils
 import com.connect.demo.R
 import com.connect.demo.base.BaseActivity
 import com.connect.demo.databinding.ActivityReferenceBinding
@@ -23,9 +21,9 @@ import com.connect.demo.utils.StreamUtils
 import com.connect.demo.utils.toast
 import com.particle.api.evm
 import com.particle.api.service.data.ContractParams
+import com.particle.base.EvmChain
 import com.particle.base.ParticleNetwork
 import com.particle.base.model.ITxData
-import com.particle.connect.ParticleConnect
 import kotlinx.coroutines.launch
 
 class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activity_reference) {
@@ -186,7 +184,7 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
         binding.result.text = ""
         walletAccount.connectAdapter.signAndSendTransaction(
             walletAccount.account.publicAddress,
-            transaction,
+            transaction.encode(),
             object : TransactionCallback {
                 override fun onTransaction(transactionId: String?) {
                     binding.result.text = transactionId ?: ""
@@ -225,7 +223,9 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
 //            MockManger.mockCreateTransaction(walletAccount.account.publicAddress)
 //        )
 //        binding.request.text = GsonUtils.toJson(transactions)
-        val transactions = Array(1){"3igAAYeQWiGxrTXP47oHcCqgbLeYt9uHEmzhR7ZXNfffL9kGxgoCpw4qsBwby6y7kCJC2JDRopPvFtqs4C377ygMb6z4rcodDfB5Qt1Wz6iTXBVGht462fGWcumarJx6J5tnMpzRN8DffZfwuaJFxuE9WSora2cXWWyRW2Ps7n2A5NGv2ULPMGumkzPaw3mUyLfDQDndrgxHPYaWzogMxWdwTQ76t44ZBBqhswoTx1KkqYku1tL1p2qnhtPZcS73czrBuhprqwLNSo5tP5ijRvUM8x9qeMhtUvsSZ9Le5y27GaGFHznB4ET85KfyujVtWbSWeHTRyDkzoR2EEHpfm6gw6DHj9o7f72c5rWrtjaDe7CFdUuKYcJcQDWwHnKgn3A2s1iHnv4ZN4sm5HXuGNTYMdxuLZdbvZzmHN3Ai4dn2vVKFks7uYcv15AKnfj9mv2RLXSLkubrP5GCymPyhZ1HUxk7qjVHJFQ89w2q71fzvPmhnMU6vzTz2LTBoXttnTRWxBk818Pg1J2sUHaqKgvp77N9LGhf6aEE2d5XQ68dzRpm6NQRkRX4jF5oyDDWZ9x95q6WQTFeENdUZxPJFYy4WUqGqqRPMkphFbpDCPQAAKkmoNCbkehwPULMBQw3p4BRW7pQLs3cvDcPgxjtBUMQtkCqPNRAk7tvxPLM6EhcFYB9d9TV3BuQ9yxJvyorD9rCzyk8qCkCuNJc7S2NPsCDcMYDRSD8GhcMbjnuWdYwdcMj2xw6Gz5zB1rK9wGcAMJmefDFv89VoBDnktKVa4sWp9Y519YmpPRuN2CMaaiuwAqQyZJaeE5V7WZXZAMppNYntyevu4P4Ws2HPqG8wM49fuDf1au6ehhDRDrihTh3wdwouyVACEuAomjqMEYtYaSJMA6YChm6Y8vXposU4Svog7cCenpoHLY3rYPGaR5orqJS7rfNDmRLp8UKqQ4XLwdKkjoFXBPB9DeptAFstpRPGGsSpk4hqCAEy6Z59AJWaKfD51PcVaN88z53uwfhfoWTKAecqAx9u2YctpueWrD9KMscXxjLbNgz7USSN3CFCtBXERiawEEepgRPKHiUhejFfpECoXhMDR36TmBusQ5TZ4fyoffwQDpf1L3iNcxcVv23YXnHqgC3dJunJQmkajUYS9qMokjJUBTtwbi9ZUcTGDtAGwKmsvsDetwn3WYVhLVtmSPF33URKQ3zH7CKAVEEdmUfVEboDB3mv5CuV8aJ8f23qzuqA8qUDbF3MYNTYDgPyN2Z8vQStxKQSbtu3uvzuW6rPKHjSwvm6RmHziVPsrNqVabyean9Nx1Gdf1fN6BYSN9DcW9EoFaTb2ucFFwz3yFgVePzEjezLi346xYZDwuYH5unkFA8eczYwSVpy7rNy6uKMkWR4REVubeLuHnkMTYucGkjFoyP6JCow6P2xb7cv2YA5ngXeQ5xQ1enAnqgKMTjxDfRSX4Wj5sBPJhyZ47gTkuT5GKZYpo5DuJ8ksvB91hPq3U4YbvKmVrvdEp"}
+        val transactions = Array(1) {
+            "3igAAYeQWiGxrTXP47oHcCqgbLeYt9uHEmzhR7ZXNfffL9kGxgoCpw4qsBwby6y7kCJC2JDRopPvFtqs4C377ygMb6z4rcodDfB5Qt1Wz6iTXBVGht462fGWcumarJx6J5tnMpzRN8DffZfwuaJFxuE9WSora2cXWWyRW2Ps7n2A5NGv2ULPMGumkzPaw3mUyLfDQDndrgxHPYaWzogMxWdwTQ76t44ZBBqhswoTx1KkqYku1tL1p2qnhtPZcS73czrBuhprqwLNSo5tP5ijRvUM8x9qeMhtUvsSZ9Le5y27GaGFHznB4ET85KfyujVtWbSWeHTRyDkzoR2EEHpfm6gw6DHj9o7f72c5rWrtjaDe7CFdUuKYcJcQDWwHnKgn3A2s1iHnv4ZN4sm5HXuGNTYMdxuLZdbvZzmHN3Ai4dn2vVKFks7uYcv15AKnfj9mv2RLXSLkubrP5GCymPyhZ1HUxk7qjVHJFQ89w2q71fzvPmhnMU6vzTz2LTBoXttnTRWxBk818Pg1J2sUHaqKgvp77N9LGhf6aEE2d5XQ68dzRpm6NQRkRX4jF5oyDDWZ9x95q6WQTFeENdUZxPJFYy4WUqGqqRPMkphFbpDCPQAAKkmoNCbkehwPULMBQw3p4BRW7pQLs3cvDcPgxjtBUMQtkCqPNRAk7tvxPLM6EhcFYB9d9TV3BuQ9yxJvyorD9rCzyk8qCkCuNJc7S2NPsCDcMYDRSD8GhcMbjnuWdYwdcMj2xw6Gz5zB1rK9wGcAMJmefDFv89VoBDnktKVa4sWp9Y519YmpPRuN2CMaaiuwAqQyZJaeE5V7WZXZAMppNYntyevu4P4Ws2HPqG8wM49fuDf1au6ehhDRDrihTh3wdwouyVACEuAomjqMEYtYaSJMA6YChm6Y8vXposU4Svog7cCenpoHLY3rYPGaR5orqJS7rfNDmRLp8UKqQ4XLwdKkjoFXBPB9DeptAFstpRPGGsSpk4hqCAEy6Z59AJWaKfD51PcVaN88z53uwfhfoWTKAecqAx9u2YctpueWrD9KMscXxjLbNgz7USSN3CFCtBXERiawEEepgRPKHiUhejFfpECoXhMDR36TmBusQ5TZ4fyoffwQDpf1L3iNcxcVv23YXnHqgC3dJunJQmkajUYS9qMokjJUBTtwbi9ZUcTGDtAGwKmsvsDetwn3WYVhLVtmSPF33URKQ3zH7CKAVEEdmUfVEboDB3mv5CuV8aJ8f23qzuqA8qUDbF3MYNTYDgPyN2Z8vQStxKQSbtu3uvzuW6rPKHjSwvm6RmHziVPsrNqVabyean9Nx1Gdf1fN6BYSN9DcW9EoFaTb2ucFFwz3yFgVePzEjezLi346xYZDwuYH5unkFA8eczYwSVpy7rNy6uKMkWR4REVubeLuHnkMTYucGkjFoyP6JCow6P2xb7cv2YA5ngXeQ5xQ1enAnqgKMTjxDfRSX4Wj5sBPJhyZ47gTkuT5GKZYpo5DuJ8ksvB91hPq3U4YbvKmVrvdEp"
+        }
         binding.result.text = ""
         walletAccount.connectAdapter.signAllTransactions(
             walletAccount.account.publicAddress,
@@ -256,7 +256,7 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
                         "signMessage",
                         signature
                     )
-                    if (ParticleConnect.chainType == ChainType.EVM) {
+                    if (ParticleNetwork.chainInfo is EvmChain) {
                         val address = Web3jSignatureVerifier.recoverAddressFromSignature(
                             signature,
                             message

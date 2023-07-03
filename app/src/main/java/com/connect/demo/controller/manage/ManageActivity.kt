@@ -23,6 +23,7 @@ import com.particle.base.EvmChain
 import com.particle.connect.ParticleConnect
 import com.particle.connect.ParticleConnectAdapter
 import com.particle.connect.ParticleConnectConfig
+import com.particle.network.service.LoginPrompt
 import com.particle.network.service.LoginType
 import com.particle.network.service.SupportAuthType
 import com.phantom.adapter.PhantomConnectAdapter
@@ -110,7 +111,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                     //you can add custom use:
 //                    val supportAuthType =
 //                        SupportAuthType.APPLE.value or SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value or SupportAuthType.GITHUB.value or SupportAuthType.LINKEDIN.value
-                    config = ParticleConnectConfig(LoginType.EMAIL, supportAuthType, false, "")
+                    config = ParticleConnectConfig(LoginType.EMAIL,supportAuthType,false,"",LoginPrompt.None)
                 }
                 connectAdapter.connect(config, object : ConnectCallback {
                     override fun onConnected(account: Account) {

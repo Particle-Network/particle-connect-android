@@ -12,7 +12,7 @@ import com.wallet.connect.adapter.model.MobileWCWallet
 
 class Coin98ConnectAdapter : BaseWalletConnectAdapter() {
 
-    val coin98 = MobileWCWallet(name = "Coin98", packageName = "coin98.crypto.finance.media", scheme = "coin98")
+    val coin98 = MobileWCWallet("Coin98", "coin98.crypto.finance.media", "coin98")
 
     override val name: WalletName = coin98.name
 
@@ -20,7 +20,6 @@ class Coin98ConnectAdapter : BaseWalletConnectAdapter() {
 
     override val url: WebsiteUrl = "https://coin98.com"
 
-    override val mobileWallet: MobileWCWallet = coin98
 
     override val readyState: WalletReadyState
         get() {

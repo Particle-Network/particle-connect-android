@@ -67,6 +67,11 @@ android {
 
 
 dependencies {
+    modules {
+        module("org.bouncycastle:bcprov-jdk15to18") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
+    }
     //required dependencies
     implementation(libs.particle.auth)
     implementation(libs.particle.api)

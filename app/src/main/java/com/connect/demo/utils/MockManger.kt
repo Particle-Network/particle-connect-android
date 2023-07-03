@@ -1,17 +1,17 @@
 package com.connect.demo.utils
 
 import com.connect.common.model.ChainType
-import com.connect.common.model.EIP1559TransactionData
-import com.connect.common.model.ITransactionData
 import com.connect.common.provider.NetworkProvider
-import com.connect.common.utils.Base58Utils
-import com.connect.common.utils.HexUtils
 import com.connect.demo.model.RpcRequest
 import com.connect.demo.model.SOLTransfer
 import com.connect.demo.model.WalletAccount
-import com.connect.demo.transaction.SolanaRpcRepository
 import com.connect.demo.transaction.SolanaTransactionManager
-import com.particle.connect.ParticleConnect
+import com.particle.base.ParticleNetwork
+import com.particle.base.SolanaChain
+import com.particle.base.model.EIP1559TransactionData
+import com.particle.base.utils.Base58Utils
+import com.particle.base.utils.HexUtils
+import org.p2p.solanaj.core.ITransactionData
 import org.p2p.solanaj.core.Transaction
 import java.math.BigInteger
 import java.util.*
@@ -32,7 +32,7 @@ object MockManger {
 
 
     fun encode(message: String): String {
-        return if (ParticleConnect.chainType == ChainType.Solana) {
+        return if (ParticleNetwork.chainInfo is SolanaChain) {
             Base58Utils.encode(message.toByteArray(Charsets.UTF_8))
         } else {
             HexUtils.encodeWithPrefix(message.toByteArray(Charsets.UTF_8))
@@ -40,11 +40,11 @@ object MockManger {
     }
 
     suspend fun mockCreateTransaction(from: String): ITransactionData {
-        return if (ParticleConnect.chainType == ChainType.Solana) {
+        return if (ParticleNetwork.chainInfo is SolanaChain) {
             mockSendSolanaTransaction(from)
         } else {
             EIP1559TransactionData(
-                "0x${ParticleConnect.chainId.toString(16)}",
+                "0x${ParticleNetwork.chainId.toString(16)}",
                 from,
                 "0x504F83D65029fB607fcAa43ebD0b7022ab161B0C",
                 "0x9184e72a000",
@@ -84,7 +84,7 @@ object MockManger {
     ): String {
         val response = solanaRpcApi.enhancedSerializeTransaction(
             RpcRequest(
-                ParticleConnect.chainId,
+                ParticleNetwork.chainId,
                 UUID.randomUUID().toString(),
                 method = "enhancedSerializeTransaction",
                 params = listOf("transfer-sol", SOLTransfer(sender, receiver, lamports))

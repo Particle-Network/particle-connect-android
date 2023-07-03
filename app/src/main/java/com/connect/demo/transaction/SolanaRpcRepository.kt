@@ -5,7 +5,7 @@ import com.connect.demo.BuildConfig
 import com.connect.demo.model.RpcRequest
 import com.connect.demo.model.TransactionAddressData
 import com.connect.demo.utils.SolanaRpcApi
-import com.particle.connect.ParticleConnect
+import com.particle.base.ParticleNetwork
 import org.p2p.solanaj.core.PublicKey
 import org.p2p.solanaj.kits.TokenTransaction
 import org.p2p.solanaj.model.types.*
@@ -24,7 +24,7 @@ object SolanaRpcRepository {
     suspend fun getRecentBlockhash(commitment: String = "finalized"): String {
         val response = solanaRpcApi.getRecentBlockhash(
             RpcRequest(
-                ParticleConnect.chainId,
+                ParticleNetwork.chainId,
                 UUID.randomUUID().toString(),
                 method = "getRecentBlockhash",
                 params = listOf(ConfigObjects.Commitment(commitment))
@@ -56,7 +56,7 @@ object SolanaRpcRepository {
     suspend fun getAccountInfo(account: String): AccountInfo? {
         val response = solanaRpcApi.getAccountInfo(
             RpcRequest(
-                ParticleConnect.chainId,
+                ParticleNetwork.chainId,
                 UUID.randomUUID().toString(),
                 method = "getAccountInfo",
                 params = listOf(
@@ -117,7 +117,7 @@ object SolanaRpcRepository {
         )
 
         val rpcRequest = RpcRequest(
-            ParticleConnect.chainId,
+            ParticleNetwork.chainId,
             UUID.randomUUID().toString(),
             method = "getTokenAccountsByOwner",
             params = params,
