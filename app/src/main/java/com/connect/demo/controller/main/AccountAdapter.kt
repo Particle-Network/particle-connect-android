@@ -18,11 +18,16 @@ class AccountAdapter :
     }
 
     override fun convert(holder: BaseDataBindingHolder<ItemAccountBinding>, item: WalletAccount) {
-        holder.dataBinding?.apply {
-            icon.load(item.account.icons?.get(0))
-            name.text = item.name
-            address.text = item.account.publicAddress
+        try {
+            holder.dataBinding?.apply {
+                name.text = item.name
+                address.text = item.account.publicAddress
+                icon.load(item.account.icons?.get(0))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 
 }

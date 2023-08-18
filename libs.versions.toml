@@ -5,8 +5,8 @@ targetSdk = "33"
 minSdk = "23"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-connect = "0.14.0"
-auth = "0.14.0"
+connect = "1.0.1"
+auth = "1.0.1"
 
 [libraries]
 #particle sdk
@@ -14,6 +14,7 @@ particle-auth =  { module = "network.particle:auth-service", version.ref = "auth
 particle-api =  { module = "network.particle:api-service", version.ref = "auth" }
 connect-common = { module = "network.particle:connect-common", version.ref = "connect" }
 connect = { module = "network.particle:connect", version.ref = "connect" }
+connect-auth-adapter = { module = "network.particle:connect-auth-adapter", version.ref = "connect" }
 connect-evm-adapter = { module = "network.particle:connect-evm-adapter", version.ref = "connect" }
 connect-sol-adapter = { module = "network.particle:connect-solana-adapter", version.ref = "connect" }
 connect-phantom-adapter = { module = "network.particle:connect-phantom-adapter", version.ref = "connect" }

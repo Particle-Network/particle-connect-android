@@ -34,7 +34,7 @@ internal class WalletConnectFragment : DialogFragment() {
     companion object {
         private const val DATA_KEY: String = "DATA_KEY"
 
-        fun show(fm: FragmentManager, data: String):WalletConnectFragment {
+        fun show(fm: FragmentManager, data: String): WalletConnectFragment {
             val frag = WalletConnectFragment()
             val bundle = Bundle()
             bundle.putString(DATA_KEY, data)

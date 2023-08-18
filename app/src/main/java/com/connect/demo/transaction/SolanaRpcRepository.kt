@@ -1,11 +1,10 @@
 package com.connect.demo.transaction
 
 import com.connect.common.provider.NetworkProvider
-import com.connect.demo.BuildConfig
 import com.connect.demo.model.RpcRequest
 import com.connect.demo.model.TransactionAddressData
 import com.connect.demo.utils.SolanaRpcApi
-import com.particle.base.ParticleNetwork
+import com.particle.connect.ParticleConnect
 import org.p2p.solanaj.core.PublicKey
 import org.p2p.solanaj.kits.TokenTransaction
 import org.p2p.solanaj.model.types.*
@@ -18,13 +17,13 @@ import java.util.*
 object SolanaRpcRepository {
 
     private val solanaRpcApi: SolanaRpcApi =
-        NetworkProvider.createRetrofit("${BuildConfig.PN_API_BASE_URL}/solana/rpc/")
+        NetworkProvider.createRetrofit("${com.connect.common.BuildConfig.PN_API_BASE_URL}/solana/")
             .create(SolanaRpcApi::class.java)
 
     suspend fun getRecentBlockhash(commitment: String = "finalized"): String {
         val response = solanaRpcApi.getRecentBlockhash(
             RpcRequest(
-                ParticleNetwork.chainId,
+                ParticleConnect.chainId,
                 UUID.randomUUID().toString(),
                 method = "getRecentBlockhash",
                 params = listOf(ConfigObjects.Commitment(commitment))
@@ -56,7 +55,7 @@ object SolanaRpcRepository {
     suspend fun getAccountInfo(account: String): AccountInfo? {
         val response = solanaRpcApi.getAccountInfo(
             RpcRequest(
-                ParticleNetwork.chainId,
+                ParticleConnect.chainId,
                 UUID.randomUUID().toString(),
                 method = "getAccountInfo",
                 params = listOf(
@@ -117,7 +116,7 @@ object SolanaRpcRepository {
         )
 
         val rpcRequest = RpcRequest(
-            ParticleNetwork.chainId,
+            ParticleConnect.chainId,
             UUID.randomUUID().toString(),
             method = "getTokenAccountsByOwner",
             params = params,

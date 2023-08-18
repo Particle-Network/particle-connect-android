@@ -1,13 +1,13 @@
 package com.connect.demo.custom_connectadapter
 
 import com.connect.common.ConnectManager
-import com.connect.common.model.IconUrl
-import com.connect.common.model.WalletName
 import com.connect.common.model.WalletReadyState
-import com.connect.common.model.WebsiteUrl
 import com.connect.common.utils.AppUtils
+import com.particle.base.model.IconUrl
+import com.particle.base.model.MobileWCWallet
+import com.particle.base.model.WalletName
+import com.particle.base.model.WebsiteUrl
 import com.wallet.connect.adapter.BaseWalletConnectAdapter
-import com.wallet.connect.adapter.model.MobileWCWallet
 
 
 class Coin98ConnectAdapter : BaseWalletConnectAdapter() {

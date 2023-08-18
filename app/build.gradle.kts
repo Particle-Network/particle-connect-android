@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.connect.common)
     implementation(libs.connect)
     //optional dependencies
+    implementation(libs.connect.auth.adapter)
     implementation(libs.connect.evm.adapter)
     implementation(libs.connect.sol.adapter)
     implementation(libs.connect.phantom.adapter)

@@ -2,12 +2,13 @@ package com.connect.demo.controller.manage
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.Keep
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.connect.common.ConnectCallback
 import com.connect.common.IConnectAdapter
+import com.connect.common.SignCallback
 import com.connect.common.model.Account
 import com.connect.common.model.ConnectError
 import com.connect.common.utils.PrefUtils
@@ -16,20 +17,17 @@ import com.connect.demo.base.BaseActivity
 import com.connect.demo.controller.secret.ImportWalletActivity
 import com.connect.demo.databinding.ActivityManageBinding
 import com.connect.demo.utils.ChainUtils
+import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
-import com.particle.base.ChainInfo
-import com.particle.base.EvmChain
+import com.particle.base.model.LoginType
 import com.particle.connect.ParticleConnect
-import com.particle.connect.ParticleConnectAdapter
-import com.particle.connect.ParticleConnectConfig
-import com.particle.network.service.LoginPrompt
-import com.particle.network.service.LoginType
-import com.particle.network.service.SupportAuthType
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
+import network.particle.chains.ChainInfo
+import particle.auth.adapter.ParticleConnectConfig
 
 class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_manage) {
 
@@ -52,16 +50,16 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
     private fun setSubTitle() {
         val selectChain = PrefUtils.getSettingInt("current_selected_chain", 1)
         chainInfo = ChainUtils.getAllChains()[selectChain]
-        val name = chainInfo.chainName.toString()
-        binding.toolbar.subtitle =
-            "Current Chain: " + name + "(" + chainInfo.chainId.toString() + ")"
+        val name = chainInfo.fullname
+        binding.toolbar.subtitle = "Current Chain: $name"
     }
 
     private fun setupRv() {
         binding.adapterRv.layoutManager = LinearLayoutManager(this)
         binding.adapterRv.addItemDecoration(
             DividerItemDecoration(
-                this, DividerItemDecoration.VERTICAL
+                this,
+                DividerItemDecoration.VERTICAL
             )
         )
         binding.adapterRv.setHasFixedSize(true)
@@ -79,11 +77,12 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
         when (connectAdapter) {
             is SolanaConnectAdapter -> {
                 showImportMenu(connectAdapter, "solana")
-
             }
+
             is EVMConnectAdapter -> {
                 showImportMenu(connectAdapter, "evm")
             }
+
             is WalletConnectAdapter -> {
                 connectAdapter.connect(null, object : ConnectCallback {
                     override fun onConnected(account: Account) {
@@ -97,29 +96,38 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                         qrDialog?.dismissAllowingStateLoss()
                     }
                 })
-                connectAdapter.qrCodeUri()?.let {
+                val url = connectAdapter.qrCodeUri()
+                url?.let {
                     qrDialog = WalletConnectFragment.show(supportFragmentManager, it)
                 }
             }
+
             else -> {
                 if (connectCheck(connectAdapter)) {
                     return
                 }
-                var config: ParticleConnectConfig? = null
-                if (connectAdapter is ParticleConnectAdapter) {
-                    val supportAuthType =  SupportAuthType.ALL.value
-                    //you can add custom use:
-//                    val supportAuthType =
-//                        SupportAuthType.APPLE.value or SupportAuthType.GOOGLE.value or SupportAuthType.FACEBOOK.value or SupportAuthType.GITHUB.value or SupportAuthType.LINKEDIN.value
-                    config = ParticleConnectConfig(LoginType.EMAIL,supportAuthType,false,"",LoginPrompt.None)
-                }
+                val config = ParticleConnectConfig(LoginType.PHONE)
                 connectAdapter.connect(config, object : ConnectCallback {
                     override fun onConnected(account: Account) {
+                        LogUtils.d("connect success account: $account")
                         toast("connect success")
-                        finish()
+                        val adapter = ParticleConnect.getAdapterByAddress(account.publicAddress)[0]
+                        adapter.signMessage(account.publicAddress, MockManger.encode("Hello World"), object :
+                            SignCallback {
+                            override fun onSigned(signature: String) {
+                                LogUtils.d("onSigned: $signature")
+                            }
+
+                            override fun onError(error: ConnectError) {
+                                LogUtils.d("onError: $error")
+                            }
+
+                        })
+
                     }
 
                     override fun onError(error: ConnectError) {
+                        LogUtils.d("connect error: $error")
                         toast(error.message)
                     }
                 })
@@ -130,21 +138,21 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
     private fun connectCheck(connectAdapter: IConnectAdapter): Boolean {
 
         if (connectAdapter is PhantomConnectAdapter) {
-            if (chainInfo is EvmChain) {
-                toast("Phantom only support Solana Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+            if (chainInfo.isEvmChain()) {
+                toast("Phantom only support Solana Chain,current is ${chainInfo.name} ${chainInfo.id}")
                 return true
             }
         }
         if (connectAdapter is TrustConnectAdapter) {
-            return if (chainInfo is EvmChain) {
+            return if (chainInfo.isEvmChain()) {
                 if (chainInfo.isMainnet()) {
                     false
                 } else {
-                    toast("Trust only support EVM Mainnet Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+                    toast("Trust only support EVM Mainnet Chain,current is ${chainInfo.name} ${chainInfo.id}")
                     true
                 }
             } else {
-                toast("Trust only support EVM Chain,current is ${chainInfo.chainName} ${chainInfo.chainId}")
+                toast("Trust only support EVM Chain,current is ${chainInfo.name} ${chainInfo.id}")
                 true
             }
         }
@@ -158,7 +166,8 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
 
         alertDialog.setItems(
             arrayOf(
-                "Import ${chainType.uppercase()} Wallet", "Create ${chainType.uppercase()} Wallet"
+                "Import ${chainType.uppercase()} Wallet",
+                "Create ${chainType.uppercase()} Wallet"
             )
         ) { _, which ->
             if (which == 0) {

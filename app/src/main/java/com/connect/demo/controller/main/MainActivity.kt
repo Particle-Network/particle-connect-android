@@ -23,9 +23,9 @@ import com.connect.demo.model.WalletAccount
 import com.connect.demo.utils.ChainUtils
 import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
-import com.particle.base.ChainInfo
 import com.particle.connect.ParticleConnect
 import kotlinx.coroutines.launch
+import network.particle.chains.ChainInfo
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -197,9 +197,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun updateCurrentChain(chain: ChainInfo) {
-        val name = chain.chainName.toString()
+        val name = chain.name
         binding.chainName.text = name
-        binding.chainId.text = chain.chainId.toString()
+        binding.chainId.text = chain.id.toString()
         binding.chainName.setCompoundDrawablesRelativeWithIntrinsicBounds(
             resources.getIdentifier(
                 name.lowercase(),
@@ -219,8 +219,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             alertDialog.setTitle("Choose Chain")
             val listItems =
                 ChainUtils.getAllChains().map {
-                    it.chainName.toString()
-                        .replaceFirstChar { c -> c.uppercase() } + "-" + it.chainId.toString()
+                    it.fullname + "-" + it.id.toString()
                 }.toTypedArray()
 
             alertDialog.setSingleChoiceItems(listItems, selectChain) { dialog, which ->
