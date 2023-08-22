@@ -111,18 +111,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                     override fun onConnected(account: Account) {
                         LogUtils.d("connect success account: $account")
                         toast("connect success")
-                        val adapter = ParticleConnect.getAdapterByAddress(account.publicAddress)[0]
-                        adapter.signMessage(account.publicAddress, MockManger.encode("Hello World"), object :
-                            SignCallback {
-                            override fun onSigned(signature: String) {
-                                LogUtils.d("onSigned: $signature")
-                            }
-
-                            override fun onError(error: ConnectError) {
-                                LogUtils.d("onError: $error")
-                            }
-
-                        })
+                        finish()
 
                     }
 
