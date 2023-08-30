@@ -11,14 +11,11 @@ import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.BitKeepConnectAdapter
 import com.wallet.connect.adapter.ImTokenConnectAdapter
 import com.wallet.connect.adapter.MetaMaskConnectAdapter
+import com.wallet.connect.adapter.OKXConnectAdapter
 import com.wallet.connect.adapter.ParticleWalletConnectAdapter
 import com.wallet.connect.adapter.RainbowConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
-import com.wallet.connect.adapter.secondory.AlphaWalletConnectAdapter
-import com.wallet.connect.adapter.secondory.BitpieConnectAdapter
-import com.wallet.connect.adapter.secondory.Coin98ConnectAdapter
-import com.wallet.connect.adapter.secondory.TokenPocketConnectAdapter
 import network.particle.chains.ChainInfo.Companion.EthereumGoerli
 import particle.auth.adapter.ParticleConnectAdapter
 
@@ -56,10 +53,7 @@ class App : Application() {
                 PhantomConnectAdapter(),
                 EVMConnectAdapter(),
                 SolanaConnectAdapter(),
-                TokenPocketConnectAdapter(),
-                Coin98ConnectAdapter(),
-                BitpieConnectAdapter(),
-                AlphaWalletConnectAdapter(),
+                OKXConnectAdapter()
             )
         }
 
