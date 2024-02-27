@@ -212,9 +212,14 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
         val trans3 =
             "{\"data\":\"0xa4f7c6f900000000000000000000000000000000000000000000000000000000642654c000000000000000000000000000000000000000000000000000000000000001ff000000000000000000000000000000000000000000000000000000000000009200000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000\",\"to\":\"0xCF80b3165a22F56EF4466E9c6A276FBFf3CA8c17\",\"nonce\":\"0x5\",\"gasLimit\":\"0x16f4e\",\"gasPrice\":\"0x2540be400\",\"value\":\"0x5af3107a4000\",\"chainId\":\"0x61\",\"type\":\"0x0\",\"from\":\"0x6ad1a1Cc971DBAEB985BCaa592d8a846dF84ec3c\"}"
         val evmTransaction = EVMTransactionUtil.createTransactionWithJson(trans3)
+        val transNativeWithApi = ParticleNetwork.evm.createTransaction(walletAccount.account.publicAddress,"0x504F83D65029fB607fcAa43ebD0b7022ab161B0C","0x9184e72a000",)
+
+        val contractParams = ContractParams.erc20Transfer("0xfE642A6EABfAc01b758829661f01eA92824c6807","0x504F83D65029fB607fcAa43ebD0b7022ab161B0C","10000000000000")
+        val transTokenWithApi = ParticleNetwork.evm.createTransaction(walletAccount.account.publicAddress,"0xfE642A6EABfAc01b758829661f01eA92824c6807",contractParams = contractParams)
+
         walletAccount.connectAdapter.signAndSendTransaction(
             walletAccount.account.publicAddress,
-            transaction.encode(),
+            transTokenWithApi!!.serialize(),
             object : TransactionCallback {
                 override fun onTransaction(transactionId: String?) {
                     binding.result.text = transactionId ?: ""
