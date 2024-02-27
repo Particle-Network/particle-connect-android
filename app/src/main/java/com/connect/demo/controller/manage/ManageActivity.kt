@@ -17,7 +17,6 @@ import com.connect.demo.base.BaseActivity
 import com.connect.demo.controller.secret.ImportWalletActivity
 import com.connect.demo.databinding.ActivityManageBinding
 import com.connect.demo.utils.ChainUtils
-import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.model.LoginType

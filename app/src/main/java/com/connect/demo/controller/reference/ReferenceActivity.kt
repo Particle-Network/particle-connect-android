@@ -382,24 +382,4 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
     }
 
 
-    private fun switchChain() {
-        val chain = ChainUtils.getAllChains()[PrefUtils.getSettingInt("current_selected_chain", 1)]
-        walletAccount.connectAdapter.switchEthereumChain(
-            walletAccount.account.publicAddress,
-            chain.id,
-            object : SwitchETHChainCallback {
-                override fun onSwitched() {
-                    toast("switchChain success")
-                    LogUtils.d("switchChain", chain.id)
-                }
-
-                override fun onError(error: ConnectError) {
-                    toast(error.message)
-                    LogUtils.d("switchChain error", error.message)
-                }
-
-            })
-    }
-
-
 }
