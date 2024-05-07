@@ -20,9 +20,7 @@ class ImportWalletActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         chainType = intent.getStringExtra("chainType") ?: "evm"
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbar.setNavigationOnClickListener {finish()  }
 
         binding.btImport.setOnClickListener {
             val secret = binding.secret.text.trim()

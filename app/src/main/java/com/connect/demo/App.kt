@@ -1,6 +1,7 @@
 package com.connect.demo
 
 import android.app.Application
+import auth.core.adapter.AuthCoreAdapter
 import com.connect.demo.utils.CoilLoader
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.Env
@@ -16,7 +17,7 @@ import com.wallet.connect.adapter.ParticleWalletConnectAdapter
 import com.wallet.connect.adapter.RainbowConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
-import network.particle.chains.ChainInfo.Companion.EthereumGoerli
+import network.particle.chains.ChainInfo.Companion.Ethereum
 import particle.auth.adapter.ParticleConnectAdapter
 
 /**
@@ -31,7 +32,7 @@ class App : Application() {
         instance = this
         CoilLoader.init(this)
         ParticleConnect.init(
-            this, Env.DEV, EthereumGoerli, DAppMetadata(
+            this, Env.DEV, Ethereum, DAppMetadata(
                 walletConnectProjectId = "f431aaea6e4dea6a669c0496f9c009c1",
                 name = "Particle Connect",
                 icon = "https://connect.particle.network/icons/512.png",
@@ -42,18 +43,18 @@ class App : Application() {
             )
         ) {
             listOf(
+                AuthCoreAdapter(),
                 ParticleConnectAdapter(),
-                ParticleWalletConnectAdapter(),
                 MetaMaskConnectAdapter(),
                 RainbowConnectAdapter(),
                 TrustConnectAdapter(),
+                PhantomConnectAdapter(),
+                WalletConnectAdapter(),
                 ImTokenConnectAdapter(),
                 BitKeepConnectAdapter(),
-                WalletConnectAdapter(),
-                PhantomConnectAdapter(),
+                OKXConnectAdapter(),
                 EVMConnectAdapter(),
                 SolanaConnectAdapter(),
-                OKXConnectAdapter()
             )
         }
 

@@ -17,6 +17,7 @@ import com.connect.demo.base.BaseActivity
 import com.connect.demo.controller.secret.ImportWalletActivity
 import com.connect.demo.databinding.ActivityManageBinding
 import com.connect.demo.utils.ChainUtils
+import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
 import com.particle.base.model.LoginType
@@ -39,9 +40,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
     }
 
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbar.setNavigationOnClickListener { finish() }
         setSubTitle()
     }
 
@@ -111,7 +110,6 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                         LogUtils.d("connect success account: $account")
                         toast("connect success")
                         finish()
-
                     }
 
                     override fun onError(error: ConnectError) {

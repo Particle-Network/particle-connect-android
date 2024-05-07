@@ -35,8 +35,7 @@
             android:padding="8dp"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:background="@drawable/edit_bg"
-            />
+            android:background="@drawable/edit_bg" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

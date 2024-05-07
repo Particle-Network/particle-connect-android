@@ -10,13 +10,21 @@
             type="String" />
     </data>
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       <ImageView
-           android:id="@+id/ivQrCode"
-           android:layout_width="300dp"
-           android:layout_height="300dp"/>
-   </RelativeLayout>
+        <ImageView
+            android:id="@+id/ivQrCode"
+            android:layout_width="300dp"
+            android:layout_height="300dp" />
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:id="@+id/connect"
+            android:layout_centerHorizontal="true"
+            android:text="Connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </layout>

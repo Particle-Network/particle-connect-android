@@ -1,6 +1,8 @@
 package com.connect.demo.controller.manage
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import com.connect.common.ConnectManager
 
 import com.connect.demo.R
 import com.connect.demo.databinding.FragmentWalletConnectBinding
@@ -58,10 +61,16 @@ internal class WalletConnectFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireArguments().getString(DATA_KEY)?.let {
+        requireArguments().getString(DATA_KEY)?.let { uri->
+            binding.connect.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(uri)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                ConnectManager.context.startActivity(intent)
+            }
             lifecycleScope.launch {
                 try {
-                    val qr = generateQrCode(it)
+                    val qr = generateQrCode(uri)
                     binding.ivQrCode.setImageBitmap(qr)
                 } catch (e: Throwable) {
                     e.printStackTrace()

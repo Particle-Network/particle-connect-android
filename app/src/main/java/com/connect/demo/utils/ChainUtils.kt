@@ -8,7 +8,7 @@ import network.particle.chains.ChainInfo
 object ChainUtils {
 
     fun getAllChains(): List<ChainInfo> {
-        return ChainInfo.getAllChains()
+        return ChainInfo.ParticleChains.values.toList()
     }
 
 }
