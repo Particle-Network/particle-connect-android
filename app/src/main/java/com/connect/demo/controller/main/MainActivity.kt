@@ -10,8 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.connect.common.ConnectKitCallback
 import com.connect.common.DisconnectCallback
 import com.connect.common.ILocalAdapter
+import com.connect.common.model.Account
 import com.connect.common.model.ConnectError
 import com.connect.common.utils.PrefUtils
 import com.connect.demo.R
@@ -24,6 +26,14 @@ import com.connect.demo.utils.ChainUtils
 import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.particle.connect.ParticleConnect
+import com.particle.connectkit.AdditionalLayoutOptions
+import com.particle.connectkit.ConnectKitConfig
+import com.particle.connectkit.ConnectOption
+import com.particle.connectkit.EnableSocialProvider
+import com.particle.connectkit.EnableWallet
+import com.particle.connectkit.EnableWalletLabel
+import com.particle.connectkit.EnableWalletProvider
+import com.particle.connectkit.ParticleConnectKit
 import kotlinx.coroutines.launch
 import network.particle.chains.ChainInfo
 
@@ -53,9 +63,59 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun setupToolbar() {
         binding.toolbar.inflateMenu(R.menu.toolbar_action)
-        binding.toolbar.setOnMenuItemClickListener {
-            startActivity(Intent(this, ManageActivity::class.java))
-            true
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.connect -> {
+                    startActivity(Intent(this, ManageActivity::class.java))
+                    true
+                }
+                R.id.connectKit->{
+                    val config = ConnectKitConfig(
+                        logo = "",
+                        connectOptions = listOf(
+                            ConnectOption.EMAIL,
+                            ConnectOption.PHONE,
+                            ConnectOption.SOCIAL,
+                            ConnectOption.WALLET),
+                        socialProviders = listOf(
+                            EnableSocialProvider.GOOGLE,
+                            EnableSocialProvider.APPLE,
+                            EnableSocialProvider.DISCORD,
+                            EnableSocialProvider.TWITTER,
+                            EnableSocialProvider.FACEBOOK,
+                            EnableSocialProvider.GITHUB,
+                            EnableSocialProvider.MICROSOFT,
+                            EnableSocialProvider.TWITCH,
+                            EnableSocialProvider.LINKEDIN),
+                        walletProviders = listOf(
+                            EnableWalletProvider(EnableWallet.MetaMask, EnableWalletLabel.RECOMMENDED),
+                            EnableWalletProvider(EnableWallet.OKX),
+                            EnableWalletProvider(EnableWallet.Phantom),
+                            EnableWalletProvider(EnableWallet.Trust),
+                            EnableWalletProvider(EnableWallet.Bitget),
+                            EnableWalletProvider(EnableWallet.WalletConnect),
+                        ),
+                        additionalLayoutOptions = AdditionalLayoutOptions(
+                            isCollapseWalletList = false,
+                            isSplitEmailAndSocial = false,
+                            isSplitEmailAndPhone = false,
+                            isHideContinueButton = false
+                        )
+                    )
+                    ParticleConnectKit.connect(config,connectCallback = object :
+                        ConnectKitCallback {
+                        override fun onConnected(walletName: String, account: Account) {
+                            refreshAccount()
+                        }
+
+                        override fun onError(error: ConnectError) {
+                        }
+
+                    });
+                    true
+                }
+                else -> false
+            }
         }
 
         updateCurrentChain(ChainUtils.getAllChains()[selectChain])

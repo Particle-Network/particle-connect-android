@@ -1,20 +1,22 @@
 [versions]
-compileSdk = "33"
-targetSdk = "33"
+compileSdk = "34"
+targetSdk = "34"
 
 minSdk = "23"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-connect = "1.4.15"
-auth = "1.4.15"
+connect = "2.0.7"
+auth = "2.0.7"
 
 [libraries]
 #particle sdk
-particle-auth =  { module = "network.particle:auth-service", version.ref = "auth" }
+particle-auth =  { module = "network.particle:auth-service", version.ref = "auth" } # deprecated use auth-core instead
+particle-auth-core =  { module = "network.particle:auth-core", version.ref = "auth" }
 particle-api =  { module = "network.particle:api-service", version.ref = "auth" }
 connect-common = { module = "network.particle:connect-common", version.ref = "connect" }
 connect = { module = "network.particle:connect", version.ref = "connect" }
-connect-auth-adapter = { module = "network.particle:connect-auth-adapter", version.ref = "connect" }
+connect-kit = { module = "network.particle:connect-kit", version.ref = "connect" }
+connect-auth-adapter = { module = "network.particle:connect-auth-adapter", version.ref = "connect" }# deprecated use connect-auth-core-adapter instead
 connect-auth-core-adapter = { module = "network.particle:connect-auth-core-adapter", version.ref = "connect" }
 connect-evm-adapter = { module = "network.particle:connect-evm-adapter", version.ref = "connect" }
 connect-sol-adapter = { module = "network.particle:connect-solana-adapter", version.ref = "connect" }
@@ -46,7 +48,7 @@ retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", ve
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-utilcodex = "com.blankj:utilcodex:1.31.0"
+utilcodex = "com.github.xxhong:CollectsPkg:2.1.0"
 recyclerview-adapter = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
 #test
 junit = "junit:junit:4.13.2"

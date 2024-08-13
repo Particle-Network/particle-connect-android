@@ -49,12 +49,13 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
 
     @SuppressLint("SetTextI18n")
     private fun setupUI() {
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
         binding.toolbar.title = walletAccount.name
         binding.toolbar.inflateMenu(R.menu.delete_action)
         binding.toolbar.setOnMenuItemClickListener {
-            walletAccount.connectAdapter.disconnect(
-                walletAccount.account.publicAddress,
+            walletAccount.connectAdapter.disconnect(walletAccount.account.publicAddress,
                 object : DisconnectCallback {
                     override fun onDisconnected() {
                         finish()
@@ -135,16 +136,6 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
 
         }
 
-        binding.ethChainId.setOnClickListener {
-            if (walletAccount.connectAdapter.connected(walletAccount.account.publicAddress)) {
-                getChainId()
-            } else {
-                connectWallet()
-            }
-        }
-
-
-
         binding.writeContract.setOnClickListener {
             lifecycleScope.launch {
                 val params = ContractParams.customAbiEncodeFunctionCall(
@@ -153,7 +144,8 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
                     params = listOf("1")
                 )
                 val txData: ITxData? = ParticleNetwork.evm.writeContract(
-                    walletAccount.account.publicAddress, params
+                    walletAccount.account.publicAddress,
+                    params
                 )
                 walletAccount.connectAdapter.signAndSendTransaction(
                     walletAccount.account.publicAddress,
@@ -165,6 +157,7 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
                         }
 
                         override fun onError(error: ConnectError) {
+
                             Log.e("signAndSendTransaction", error.message)
                             toast(error.message)
                         }
@@ -191,16 +184,25 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
         })
     }
 
+//    val testTransactionStr ="7b22616374696f6e223a226e6f726d616c222c22636861696e4964223a2230783261222c2264617461223a223078613037313264363830303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303031222c2266726f6d223a22307835303466383364363530323966623630376663616134336562643062373032326162313631623063222c226761734c6576656c223a22222c226761734c696d6974223a2230783230633835222c226d6178466565506572476173223a2230783737333539343063222c226d61785072696f72697479466565506572476173223a2230783737333539343030222c226e6f6e6365223a22307830222c2272223a6e756c6c2c2273223a6e756c6c2c22746f223a22307864303030663030306161316638616363626435383135303536656133326135343737376232666334222c2274797065223a22307832222c2276223a6e756c6c2c2276616c7565223a6e756c6c7d"
 
     private suspend fun signAndSendTransaction() {
         val transaction = MockManger.mockCreateTransaction(walletAccount.account.publicAddress)
+
+
+        val transNativeWithApi = ParticleNetwork.evm.createTransaction(walletAccount.account.publicAddress,"0x504F83D65029fB607fcAa43ebD0b7022ab161B0C","0x9184e72a000",)
+
+        val contractParams = ContractParams.erc20Transfer("0xfE642A6EABfAc01b758829661f01eA92824c6807","0x504F83D65029fB607fcAa43ebD0b7022ab161B0C","10000000000000")
+        val transTokenWithApi = ParticleNetwork.evm.createTransaction(walletAccount.account.publicAddress,"0xfE642A6EABfAc01b758829661f01eA92824c6807",contractParams = contractParams)
+
+        binding.request.text = GsonUtils.toJson(transNativeWithApi)
+        binding.result.text = ""
         walletAccount.connectAdapter.signAndSendTransaction(
             walletAccount.account.publicAddress,
-            transaction.encode(),
+            transNativeWithApi!!.serialize(),
             object : TransactionCallback {
                 override fun onTransaction(transactionId: String?) {
                     binding.result.text = transactionId ?: ""
-                    Log.i("signAndSendTransaction ", transactionId ?: "")
                     toast("signAndSendTransaction success")
                 }
 
@@ -256,7 +258,7 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
             })
     }
 
-    private fun signMessage(message: String = "Hello Particle") {
+    private fun signMessage(message: String = "Hello Particle Connect!") {
         binding.request.text = message
         binding.result.text = ""
         walletAccount.connectAdapter.signMessage(
@@ -267,11 +269,13 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
                     binding.result.text = signature
                     toast("signMessage success")
                     LogUtils.d(
-                        "signMessage", signature
+                        "signMessage",
+                        signature
                     )
                     if (ParticleConnect.chainType == ChainType.EVM) {
                         val address = Web3jSignatureVerifier.recoverAddressFromSignature(
-                            signature, message
+                            signature,
+                            message
                         )
                         LogUtils.d(
                             "recoverAddressFromSignature",
@@ -317,7 +321,9 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
             object : SignCallback {
                 override fun onSigned(signature: String) {
                     val result = walletAccount.connectAdapter.verify(
-                        walletAccount.account.publicAddress, signature, message
+                        walletAccount.account.publicAddress,
+                        signature,
+                        message
                     )
                     val displayTxt = "signature:$signature\n\n verify:$result"
                     LogUtils.d("login verify", result)
@@ -361,21 +367,4 @@ class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activi
     }
 
 
-    private fun getChainId() {
-        walletAccount.connectAdapter.request(
-            walletAccount.account.publicAddress,
-            "eth_chainId",
-            null,
-            object : RequestCallback {
-                override fun onRequestCallback(response: String) {
-                    toast("getChainId: $response")
-                    LogUtils.d("getChainId", response)
-                }
-
-                override fun onError(error: ConnectError) {
-                    toast(error.message)
-                }
-
-            })
-    }
 }

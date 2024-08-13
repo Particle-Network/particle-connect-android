@@ -9,15 +9,14 @@ import com.particle.base.model.DAppMetadata
 import com.particle.connect.ParticleConnect
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
-import com.wallet.connect.adapter.BitKeepConnectAdapter
+import com.wallet.connect.adapter.BitGetConnectAdapter
 import com.wallet.connect.adapter.ImTokenConnectAdapter
 import com.wallet.connect.adapter.MetaMaskConnectAdapter
 import com.wallet.connect.adapter.OKXConnectAdapter
-import com.wallet.connect.adapter.ParticleWalletConnectAdapter
 import com.wallet.connect.adapter.RainbowConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
-import network.particle.chains.ChainInfo.Companion.Ethereum
+import network.particle.chains.ChainInfo.Companion.EthereumSepolia
 import particle.auth.adapter.ParticleConnectAdapter
 
 /**
@@ -31,8 +30,9 @@ class App : Application() {
         super.onCreate()
         instance = this
         CoilLoader.init(this)
+
         ParticleConnect.init(
-            this, Env.DEV, Ethereum, DAppMetadata(
+            this, Env.DEV, EthereumSepolia, DAppMetadata(
                 walletConnectProjectId = "f431aaea6e4dea6a669c0496f9c009c1",
                 name = "Particle Connect",
                 icon = "https://connect.particle.network/icons/512.png",
@@ -44,19 +44,17 @@ class App : Application() {
         ) {
             listOf(
                 AuthCoreAdapter(),
-                ParticleConnectAdapter(),
                 MetaMaskConnectAdapter(),
                 RainbowConnectAdapter(),
                 TrustConnectAdapter(),
-                PhantomConnectAdapter(),
-                WalletConnectAdapter(),
                 ImTokenConnectAdapter(),
-                BitKeepConnectAdapter(),
-                OKXConnectAdapter(),
+                BitGetConnectAdapter(),
+                WalletConnectAdapter(),
+                PhantomConnectAdapter(),
                 EVMConnectAdapter(),
                 SolanaConnectAdapter(),
+                OKXConnectAdapter()
             )
         }
-
     }
 }

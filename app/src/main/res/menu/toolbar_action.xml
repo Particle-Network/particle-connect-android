@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/manage"
-        android:icon="@drawable/ic_create_wallet"
-        android:title="Manage"
-        app:showAsAction="always" />
+        android:id="@+id/connect"
+        android:title="@string/connect"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/connectKit"
+        android:title="@string/connectKit"
+        app:showAsAction="collapseActionView" />
 </menu>

@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import auth.core.adapter.ConnectConfigPhone
 import com.blankj.utilcode.util.LogUtils
 import com.connect.common.ConnectCallback
 import com.connect.common.IConnectAdapter
-import com.connect.common.SignCallback
 import com.connect.common.model.Account
 import com.connect.common.model.ConnectError
 import com.connect.common.utils.PrefUtils
@@ -20,14 +20,12 @@ import com.connect.demo.utils.ChainUtils
 import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
-import com.particle.base.model.LoginType
 import com.particle.connect.ParticleConnect
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
 import network.particle.chains.ChainInfo
-import particle.auth.adapter.ParticleConnectConfig
 
 class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_manage) {
 
@@ -104,8 +102,7 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                 if (connectCheck(connectAdapter)) {
                     return
                 }
-                val config = ParticleConnectConfig(LoginType.PHONE)
-                connectAdapter.connect(config, object : ConnectCallback {
+                connectAdapter.connect(ConnectConfigPhone(), object : ConnectCallback {
                     override fun onConnected(account: Account) {
                         LogUtils.d("connect success account: $account")
                         toast("connect success")
@@ -113,8 +110,8 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                     }
 
                     override fun onError(error: ConnectError) {
+                        LogUtils.d("connect error",Thread.currentThread())
                         LogUtils.d("connect error: $error")
-                        toast(error.message)
                     }
                 })
             }

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.connect.demo">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <queries>
+        ...
+        <package android:name="coin98.crypto.finance.media" />
+    </queries>
 
     <application
         android:name=".App"
@@ -10,10 +14,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:fullBackupContent="@xml/backup_rules"
-        tools:replace="android:fullBackupContent"
-        android:theme="@style/ParticleConnect"
-        android:usesCleartextTraffic="true">
+        tools:replace="android:fullBackupContent,android:theme"
+        android:fullBackupContent="@xml/pn_backup_rules"
+        android:theme="@style/ParticleConnect">
         <activity
             android:name=".controller.secret.ImportWalletActivity"
             android:exported="false"
@@ -21,17 +24,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".controller.reference.ReferenceActivity"
-            android:exported="true"
-            android:theme="@style/ParticleConnect">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="particlewc" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/ParticleConnect" />
         <activity
             android:name=".controller.manage.ManageActivity"
             android:exported="false"
@@ -42,17 +36,15 @@
             android:theme="@style/ParticleConnect">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <!-- Particle Network config start -->
+        </activity> <!-- Particle Network config start -->
         <activity
-            android:name="com.particle.auth.controller.WebActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="com.particle.network.controller.WebActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/ThemeAuthWeb">
+            android:theme="@style/ThemeAuthWeb">>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -61,17 +53,33 @@
 
                 <data android:scheme="pn${PN_APP_ID}" />
             </intent-filter>
+        </activity> <!-- Particle Connect Redirect Callback -->
+
+        <!-- Particle AuthCore Start -->
+        <activity
+            android:name="com.particle.auth.controller.AuthCoreWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/ThemeAuthWeb">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="ac${PN_APP_ID}" />
+            </intent-filter>
         </activity>
-        <!-- Particle Connect Redirect Callback -->
+        <!-- Particle AuthCore End -->
+
         <activity
             android:name="com.connect.common.controller.RedirectActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="pn_connect_demo" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -91,8 +99,5 @@
             android:name="particle.network.project_id"
             android:value="${PN_PROJECT_ID}" />
     </application>
-    <queries>
-        <package android:name="com.apollox.android" />
-    </queries>
 
 </manifest>

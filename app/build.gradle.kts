@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -63,6 +60,7 @@ android {
     dataBinding {
         isEnabled = true
     }
+    namespace = "com.connect.demo"
 }
 
 
@@ -71,14 +69,19 @@ dependencies {
         module("org.bouncycastle:bcprov-jdk15to18") {
             replacedBy("org.bouncycastle:bcprov-jdk15on")
         }
+        module("org.bouncycastle:bcprov-jdk18on") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
     }
     //required dependencies
-    implementation(libs.particle.auth)
+    implementation(libs.particle.auth) // deprecated use auth-core-service instead
+    implementation(libs.particle.auth.core)
     implementation(libs.particle.api)
     implementation(libs.connect.common)
     implementation(libs.connect)
+    implementation(libs.connect.kit)
     //optional dependencies
-    implementation(libs.connect.auth.adapter)
+    implementation(libs.connect.auth.adapter)// deprecated use auth-core-adapter instead
     implementation(libs.connect.auth.core.adapter)
     implementation(libs.connect.evm.adapter)
     implementation(libs.connect.sol.adapter)
