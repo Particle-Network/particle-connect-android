@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.LogUtils
+
 import com.connect.common.*
 import com.connect.common.eip4361.Eip4361Message
 import com.connect.common.eip4361.Web3jSignatureVerifier
@@ -29,6 +28,8 @@ import com.particle.base.model.ITxData
 import com.particle.base.model.LegacyTransactionData
 import com.particle.connect.ParticleConnect
 import kotlinx.coroutines.launch
+import network.blankj.utilcode.util.GsonUtils
+import network.blankj.utilcode.util.LogUtils
 import network.particle.chains.NativeCurrency
 
 class ReferenceActivity : BaseActivity<ActivityReferenceBinding>(R.layout.activity_reference) {

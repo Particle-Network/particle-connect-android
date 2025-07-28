@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_create_wallet"
         android:title="Manage"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/aa_service"
+        android:icon="@drawable/ic_wallet"
+        android:title="AA Service"
+        app:showAsAction="always" />
 </menu>

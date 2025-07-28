@@ -53,9 +53,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun setupToolbar() {
         binding.toolbar.inflateMenu(R.menu.toolbar_action)
-        binding.toolbar.setOnMenuItemClickListener {
-            startActivity(Intent(this, ManageActivity::class.java))
-            true
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.manage -> {
+                    startActivity(Intent(this, ManageActivity::class.java))
+                    true
+                }
+                R.id.aa_service -> {
+                    startActivity(Intent(this, com.connect.demo.aaservice.AAServiceDemoActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
 
         updateCurrentChain(ChainUtils.getAllChains()[selectChain])

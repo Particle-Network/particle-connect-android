@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -53,16 +50,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_11)
-        targetCompatibility(JavaVersion.VERSION_11)
+        sourceCompatibility(JavaVersion.VERSION_17)
+        targetCompatibility(JavaVersion.VERSION_17)
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     dataBinding {
         isEnabled = true
     }
+    namespace = "com.connect.demo"
 }
 
 
@@ -71,15 +69,22 @@ dependencies {
         module("org.bouncycastle:bcprov-jdk15to18") {
             replacedBy("org.bouncycastle:bcprov-jdk15on")
         }
+        module("org.bouncycastle:bcprov-jdk18on") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
     }
+    implementation(libs.aa.service)
+    implementation(libs.auth.core)
+    implementation(libs.mpc.core)
+    implementation(libs.api.service)
     //required dependencies
-    implementation(libs.particle.auth)
-    implementation(libs.particle.api)
     implementation(libs.connect.common)
-    implementation(libs.connect)
     //optional dependencies
-    implementation(libs.connect.auth.adapter)
+
+    implementation(libs.connect.kit)
+    implementation(libs.connect.core)
     implementation(libs.connect.auth.core.adapter)
+    implementation(libs.connect.auth.adapter)
     implementation(libs.connect.evm.adapter)
     implementation(libs.connect.sol.adapter)
     implementation(libs.connect.phantom.adapter)
@@ -92,11 +97,12 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
     implementation(libs.bundles.retrofit)
-    implementation(libs.bundles.okhttp3)
+    implementation(libs.okhttp3)
     implementation(libs.recyclerview.adapter)
     implementation(libs.coil)
     implementation(libs.coil.svg)
     implementation(libs.coil.gif)
+    implementation(libs.utilcodex)
     implementation(libs.zxing.barcodescanner)
 
     testImplementation(libs.junit)

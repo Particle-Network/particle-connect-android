@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.LogUtils
+import auth.core.adapter.AuthCoreAdapter
+import auth.core.adapter.ConnectConfigSocialLogin
 import com.connect.common.ConnectCallback
 import com.connect.common.IConnectAdapter
 import com.connect.common.SignCallback
@@ -20,12 +21,15 @@ import com.connect.demo.utils.ChainUtils
 import com.connect.demo.utils.MockManger
 import com.connect.demo.utils.toast
 import com.evm.adapter.EVMConnectAdapter
+import com.particle.auth.AuthCore
 import com.particle.base.model.LoginType
+import com.particle.base.model.SocialLoginType
 import com.particle.connect.ParticleConnect
 import com.phantom.adapter.PhantomConnectAdapter
 import com.solana.adapter.SolanaConnectAdapter
 import com.wallet.connect.adapter.TrustConnectAdapter
 import com.wallet.connect.adapter.WalletConnectAdapter
+import network.blankj.utilcode.util.LogUtils
 import network.particle.chains.ChainInfo
 import particle.auth.adapter.ParticleConnectConfig
 
@@ -99,11 +103,28 @@ class ManageActivity : BaseActivity<ActivityManageBinding>(R.layout.activity_man
                     qrDialog = WalletConnectFragment.show(supportFragmentManager, it)
                 }
             }
+            is AuthCoreAdapter->{
+                val config = ConnectConfigSocialLogin(loginType = SocialLoginType.GOOGLE)
+                connectAdapter.connect(config,object :ConnectCallback{
+                    override fun onConnected(account: Account) {
 
+                        LogUtils.d("connect success account: $account")
+                        toast("connect success")
+                        finish()
+                    }
+
+                    override fun onError(error: ConnectError) {
+                        LogUtils.d("connect error: $error")
+                        toast(error.message)
+                    }
+
+                })
+            }
             else -> {
                 if (connectCheck(connectAdapter)) {
                     return
                 }
+                LogUtils.d("connectAdapter:",connectAdapter.name)
                 val config = ParticleConnectConfig(LoginType.PHONE)
                 connectAdapter.connect(config, object : ConnectCallback {
                     override fun onConnected(account: Account) {
